@@ -1,0 +1,16 @@
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            overflow: hidden;
+        }
+        .container{
+            position: absolute;
+            background-color: #000000;
+        }
+        .dvd{
+            position: relative;
+            height: 200px;
+            width: auto;
+        }
