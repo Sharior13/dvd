@@ -1,1 +1,1 @@
-Idle DVD Animation demo
+Responsive idle DVD animation demo
