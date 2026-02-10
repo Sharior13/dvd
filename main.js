@@ -1,61 +1,48 @@
 let dvd = document.getElementById("dvd");
 
-let height = window.innerHeight;
-let width = window.innerWidth;
+let logoIndex = 1, x = 0, y = 0, dirX = 1, dirY = 1;
+const LOGO_COUNT = 6;
 
-let container = document.querySelector(".container");
-container.style.height = `${height}px`;
-container.style.width = `${width}px`;
-window.addEventListener('resize',()=>{
-    height = window.innerHeight;
+let width = window.innerWidth;
+let height = window.innerHeight;
+
+window.addEventListener("resize", ()=>{
     width = window.innerWidth;
-    container.style.height = `${height}px`;
-    container.style.width = `${width}px`;
+    height = window.innerHeight;
 });
 
-let num=1, incrementX=true, incrementY=true, dirX=1, dirY=1;
-const changeX = ()=>{
-    if(incrementX){
-        dirX++;
+const changeLogo = ()=>{
+    logoIndex++;
+    if(logoIndex>LOGO_COUNT){
+        logoIndex = 1;
     }
-    else{
-        dirX--;
-    }
+    dvd.src = `assets/logo${logoIndex}.png`;
 };
-const changeY = ()=>{
-    if(incrementY){
-        dirY++;
-    }
-    else{
-        dirY--;
-    }
-};   
 
 const animate = ()=>{
-    if(num>6){
-        num=1;
+
+    if(x + dvd.clientWidth > width){
+        dirX = -1;
+        changeLogo();
     }
-    dvd.src = `assets/logo${num}.png`;
-    dvd.style.left = `${dirX}px`;
-    dvd.style.top = `${dirY}px`;
-    if(dirX + dvd.clientWidth > width){
-        incrementX = false;
-        num++;
+    if(x < 0){
+        dirX = 1;
+        changeLogo();
     }
-    if(dirX < 0){
-        incrementX = true;
-        num++;
+
+    if(y + dvd.clientHeight > height){
+        dirY = -1;
+        changeLogo();
     }
-    if(dirY + dvd.clientHeight > height){
-        incrementY = false;
-        num++;
+    if(y < 0){
+        dirY = 1;
+        changeLogo();
     }
-    if(dirY < 0){
-        incrementY = true;
-        num++;
-    }
-    changeX();
-    changeY();
+    
+    x += dirX;
+    y += dirY;
+    
+    dvd.style.transform = `translate(${x}px, ${y}px)`
     requestAnimationFrame(animate);
 };
 
