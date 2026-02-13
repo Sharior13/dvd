@@ -2,6 +2,7 @@ let dvd = document.getElementById("dvd");
 
 let logoIndex = 1, x = 0, y = 0, dirX = 1, dirY = 1;
 const LOGO_COUNT = 6;
+const imageCache = [];
 
 let width = window.innerWidth;
 let height = window.innerHeight;
@@ -10,6 +11,14 @@ window.addEventListener("resize", ()=>{
     width = window.innerWidth;
     height = window.innerHeight;
 });
+
+const preloadImages = ()=>{
+    for(let i=1; i<=LOGO_COUNT; i++){
+        let img = new Image();
+        img.src = `assets/logo${i}.png`;
+        imageCache.push(img);
+    }
+};
 
 const changeLogo = ()=>{
     logoIndex++;
@@ -46,4 +55,5 @@ const animate = ()=>{
     requestAnimationFrame(animate);
 };
 
+preloadImages();
 animate(); 
